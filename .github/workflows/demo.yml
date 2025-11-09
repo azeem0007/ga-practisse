@@ -31,7 +31,7 @@ jobs:
         run: ls -altrh
       - name: store a value in o/p
         id: pub1
-        run: find dist/*.js -type f -execdir echo "FILE_NAME={}" >> $GITHUB_OUTPUT ";"
+        run: find dist/assets/*.js -type f -execdir echo "FILE_NAME={}" >> $GITHUB_OUTPUT ";"
       - name: upload artifacts
         uses: actions/upload-artifact@v4
         with:
