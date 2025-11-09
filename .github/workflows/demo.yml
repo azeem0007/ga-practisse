@@ -18,6 +18,8 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
+    outputs: 
+      script-file: ${{steps.pub1.outputs.FILE_NAME}}
     steps:
       - name: Get code
         uses: actions/checkout@v3
@@ -32,7 +34,10 @@ jobs:
           path: |
             dist
             package.json 
-  deploy:
+      - name: store a value in o/p
+        id: pub1
+        run: find dist/*.js -type f -execdir echo "FILE_NAME={}" >> $GITHUB_OUTPUT ";"
+  deploy: 
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -40,6 +45,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dist-files
+      - name: get the output name
+        run: echo "${{needs.build.outputs.script-file}}"
       - name: o/p contents
         run: ls -altrh
       - name: check in dist
