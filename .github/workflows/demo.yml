@@ -27,6 +27,11 @@ jobs:
         run: npm ci
       - name: Build website
         run: npm run build
+      - name: o/p contents
+        run: ls -altrh
+      - name: store a value in o/p
+        id: pub1
+        run: find dist/*.js -type f -execdir echo "FILE_NAME={}" >> $GITHUB_OUTPUT ";"
       - name: upload artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -34,9 +39,7 @@ jobs:
           path: |
             dist
             package.json 
-      - name: store a value in o/p
-        id: pub1
-        run: find dist/*.js -type f -execdir echo "FILE_NAME={}" >> $GITHUB_OUTPUT ";"
+      
   deploy: 
     needs: build
     runs-on: ubuntu-latest
