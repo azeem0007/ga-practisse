@@ -42,5 +42,9 @@ jobs:
           name: dist-files
       - name: o/p contents
         run: ls -altrh
+      - name: check in dist
+        run: cd dist 
+      - name: o/p contents
+        run: ls -altrh
       - name: Deploy
         run: echo "Deploying..."
